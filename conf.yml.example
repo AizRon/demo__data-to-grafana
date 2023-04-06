@@ -1,0 +1,23 @@
+databases:
+  src_db: /var/lib/docker/volumes/notif-db/_data/app.db
+  dst_db: ./database/load-info.db
+
+logging:
+  filename: 'logs/update.log'
+  filemode: 'a'                 # 'w' - rewrite file; 'a' - append to file
+  level: 'INFO'                 # DEBUG, INFO, WARNING, ERROR
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+
+### IFSYSS (Information Systems) - list of dict:
+###   - name: TABLE_NAME_IN_DATABASE               # table name in database: zn_$(name)
+###     query_where: QUERY_STRING_AFTER_WHERE      # database query: "SELECT .. FROM .. WHERE $(query_where);"
+#
+### "zones.infsys" - ID of information system
+
+infsyss:
+  - name: all_except_GCVN
+    query_where: 'zones.infsys<>35'
+
+  - name: GCVN
+    query_where: 'zones.infsys=35'
